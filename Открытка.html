@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>С 8 Марта! | Поздравление для одноклассниц</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            burgundy: '#2D0B1E',
+                            darkPlum: '#1F0614',
+                            deepRose: '#42122F',
+                            brightRose: '#FF7597',
+                            softRose: '#FFD1DC',
+                            gold: '#E2B86B',
+                            goldLight: '#FFF0C3',
+                            paperBg: '#FFFDF9'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+                        sans: ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- External Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600;1,700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        body {
+            background-color: #2D0B1E;
+            color: #FFE4E8;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Glassmorphism styling */
+        .glass-card {
+            background: rgba(66, 18, 47, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(226, 184, 107, 0.28);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65);
+        }
+
+        .glass-input {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(226, 184, 107, 0.35);
+            color: #ffffff;
+        }
+        .glass-input:focus {
+            outline: none;
+            border-color: #E2B86B;
+            box-shadow: 0 0 15px rgba(226, 184, 107, 0.4);
+        }
+
+        /* Envelope Styles */
+        .envelope-wrapper {
+            perspective: 1000px;
+        }
+
+        .envelope {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background: #1e0514;
+            border-radius: 14px;
+            border: 1px solid rgba(226, 184, 107, 0.3);
+            box-shadow: 0 18px 45px rgba(0,0,0,0.7), 0 0 30px rgba(255, 117, 151, 0.2);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 110px;
+            background: #330b23;
+            clip-path: polygon(0 0, 50% 100%, 100% 0);
+            transform-origin: top;
+            transition: transform 0.6s ease-in-out;
+            z-index: 3;
+            border-top: 1px solid rgba(226, 184, 107, 0.4);
+        }
+
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .wax-seal {
+            position: absolute;
+            top: 85px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 58px;
+            height: 58px;
+            background: radial-gradient(circle, #E2B86B 0%, #99712B 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6), inset 0 2px 4px rgba(255,255,255,0.5);
+            z-index: 4;
+            transition: transform 0.3s ease, opacity 0.4s ease;
+            border: 2px solid #FFF0C3;
+        }
+
+        .wax-seal span {
+            color: #2D0B1E;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: bold;
+            font-size: 26px;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.3);
+        }
+
+        .letter-paper {
+            background-color: #FFFDF9;
+            color: #2D0B1E;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+            border-radius: 16px;
+            background-image: radial-gradient(#e5d8c8 0.75px, transparent 0.75px);
+            background-size: 12px 12px;
+        }
+
+        /* Floating particles */
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(0.8) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-140px) scale(1.4) rotate(25deg);
+            }
+        }
+
+        .floating-heart {
+            position: absolute;
+            pointer-events: none;
+            animation: floatUp 1.2s ease-out forwards;
+            font-size: 24px;
+            z-index: 50;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(226, 184, 107, 0.4); transform: scale(1); }
+            50% { box-shadow: 0 0 32px rgba(226, 184, 107, 0.85); transform: scale(1.03); }
+        }
+
+        .btn-glow {
+            animation: pulseGlow 2.5s infinite;
+        }
+
+        /* Certificate Heart Animations */
+        @keyframes heartPopIn {
+            0% { opacity: 0; transform: scale(0.1) rotate(-20deg); }
+            60% { opacity: 1; transform: scale(1.2) rotate(6deg); }
+            80% { transform: scale(0.92) rotate(-3deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 12px rgba(255,117,151,0.8)); }
+            14% { transform: scale(1.16); filter: drop-shadow(0 0 24px rgba(255,117,151,1)); }
+            28% { transform: scale(1); filter: drop-shadow(0 0 12px rgba(255,117,151,0.8)); }
+            42% { transform: scale(1.1); filter: drop-shadow(0 0 18px rgba(255,117,151,0.9)); }
+            70% { transform: scale(1); }
+        }
+
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .certificate-heart-container.appear {
+            animation: heartPopIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .animate-heartbeat {
+            animation: heartbeat 2.2s infinite ease-in-out;
+        }
+
+        .animate-spin-slow {
+            animation: spinSlow 14s linear infinite;
+        }
+
+        /* Monster Shake Animation on Hit */
+        @keyframes monsterHurt {
+            0% { transform: scale(1) rotate(0deg); }
+            20% { transform: scale(0.9) rotate(-12deg); }
+            40% { transform: scale(1.1) rotate(12deg); }
+            60% { transform: scale(0.95) rotate(-6deg); }
+            80% { transform: scale(1.05) rotate(6deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .monster-hit {
+            animation: monsterHurt 0.4s ease-in-out;
+        }
+
+        .emblem-card {
+            background: linear-gradient(135deg, rgba(66, 18, 47, 0.95), rgba(31, 6, 20, 0.98));
+            border: 1px solid rgba(226, 184, 107, 0.4);
+            box-shadow: inset 0 0 25px rgba(226, 184, 107, 0.12);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1F0614;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #42122F;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen relative overflow-x-hidden selection:bg-brand-brightRose selection:text-white">
+
+    <!-- Background Particle Canvas -->
+    <canvas id="bgCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <!-- Top Floating Toolbar -->
+    <div class="fixed top-4 right-4 z-50 flex items-center gap-3">
+        <button id="soundBtn" onclick="toggleAudio()" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-brand-gold hover:text-white transition duration-200 shadow-lg" title="Звук">
+            <i class="fas fa-music text-sm" id="soundIcon"></i>
+        </button>
+        <button id="adminBtn" onclick="openAdminModal()" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-brand-gold hover:text-white transition duration-200 shadow-lg" title="Панель настройки">
+            <i class="fas fa-cog text-sm"></i>
+        </button>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 transform -translate-y-20 opacity-0 transition-all duration-300 pointer-events-none glass-card px-6 py-3 rounded-full text-xs font-medium text-brand-goldLight border border-brand-gold/40 shadow-2xl flex items-center gap-2">
+        <i id="toastIcon" class="fas fa-info-circle text-brand-gold"></i>
+        <span id="toastMsg">Уведомление</span>
+    </div>
+
+    <main class="relative z-10 flex-1 flex flex-col items-center justify-center p-4 max-w-lg mx-auto w-full min-h-screen">
+
+        <!-- STEP 1: SECRET KEYWORD LOCK SCREEN -->
+        <section id="step1" class="w-full transition-all duration-500 ease-in-out">
+            <div class="glass-card rounded-3xl p-6 sm:p-8 text-center relative overflow-hidden">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-tr from-brand-gold via-brand-brightRose to-yellow-200 p-0.5 flex items-center justify-center shadow-lg shadow-brand-gold/30">
+                    <div class="w-full h-full bg-brand-darkPlum rounded-full flex items-center justify-center">
+                        <i class="fas fa-lock text-2xl text-brand-gold"></i>
+                    </div>
+                </div>
+
+                <span class="text-[11px] font-semibold tracking-widest text-brand-gold uppercase">8 Марта • Для наших одноклассниц</span>
+                <h1 class="font-serif text-3xl sm:text-4xl italic text-white my-2">Эта эмоция закрыта словом</h1>
+                <p id="displayHintText" class="text-sm text-brand-softRose/90 mb-6 font-light">подсказка: где мы чаще всего видимся</p>
+
+                <div class="space-y-4 mb-6">
+                    <div class="relative">
+                        <input type="text" id="secretInput" placeholder="Введите слово..." class="w-full glass-input rounded-xl px-4 py-3.5 text-sm tracking-wider text-center font-medium placeholder-brand-softRose/40 focus:ring-2 focus:ring-brand-gold" onkeyup="if(event.key==='Enter') checkSecretCode()">
+                    </div>
+                </div>
+
+                <button onclick="checkSecretCode()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-gold via-yellow-500 to-brand-brightRose text-brand-darkPlum font-bold shadow-lg hover:brightness-110 active:scale-[0.98] transition duration-200 btn-glow flex items-center justify-center gap-2">
+                    <span>Открыть</span>
+                    <i class="fas fa-heart text-xs"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- STEP 2: SELECT CLASSMATE NAME -->
+        <section id="step2" class="w-full hidden transition-all duration-500 ease-in-out">
+            <div class="glass-card rounded-3xl p-6 sm:p-8 text-center relative overflow-hidden">
+                <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-brand-deepRose flex items-center justify-center text-brand-gold text-xl border border-brand-gold/30">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <h2 class="font-serif text-3xl italic text-white mb-2">Укажи своё имя</h2>
+                <p class="text-xs text-brand-softRose/80 mb-6">Выбери себя из списка нашего класса</p>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 max-h-[320px] overflow-y-auto pr-1 mb-6" id="namesGrid">
+                    <!-- Dynamic Name Buttons -->
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 3: ENVELOPE & WAX SEAL ANIMATION -->
+        <section id="step3" class="w-full hidden transition-all duration-500 ease-in-out">
+            <div id="envelopeView" class="flex flex-col items-center justify-center py-6">
+                <div class="text-center mb-6">
+                    <h2 class="font-serif text-3xl italic text-white" id="recipientGreetingTitle">Тебе письмо</h2>
+                    <p class="text-xs text-brand-goldLight/80 mt-1">Нажми на конверт или восковую печать, чтобы распечатать</p>
+                </div>
+
+                <div class="envelope-wrapper my-4">
+                    <div id="envelopeObj" onclick="openEnvelope()" class="envelope">
+                        <div class="envelope-flap"></div>
+                        <div class="wax-seal">
+                            <span>8</span>
+                        </div>
+                        <div class="absolute inset-0 flex items-end justify-center pb-4 z-10 pointer-events-none">
+                            <span class="text-xs font-serif italic text-brand-goldLight/70 tracking-widest uppercase">открой, мы не забыли</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 4: PERSONALIZED LETTER -->
+        <section id="step4" class="w-full hidden transition-all duration-500 ease-in-out">
+            <div class="letter-paper rounded-2xl p-6 sm:p-8 relative text-gray-900 shadow-2xl border border-brand-gold/40">
+                <div class="flex justify-between items-center mb-4 border-b border-brand-gold/40 pb-3">
+                    <div class="flex items-center gap-2 text-brand-burgundy">
+                        <i class="fas fa-crown text-brand-gold text-sm"></i>
+                        <span class="font-serif italic font-bold text-lg">8 Марта</span>
+                    </div>
+                    <span class="text-xs text-gray-500 font-serif italic">От парней нашего класса</span>
+                </div>
+
+                <h3 class="font-serif text-2xl sm:text-3xl text-brand-burgundy font-bold mb-3" id="letterHeaderTitle">
+                    С днём 8 Марта!
+                </h3>
+
+                <div id="letterBody" class="text-sm sm:text-base leading-relaxed text-gray-800 font-serif space-y-3 mb-6 whitespace-pre-line text-justify">
+                    <!-- Unique girl-specific message populated here -->
+                </div>
+
+                <!-- Decorative Badge -->
+                <div class="emblem-card rounded-2xl p-4 my-6 text-center border border-brand-gold/40 relative overflow-hidden">
+                    <div class="w-12 h-12 mx-auto mb-1 text-brand-gold flex items-center justify-center">
+                        <svg class="w-10 h-10 text-brand-gold animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                    </div>
+                    <div class="font-serif italic font-bold text-xl text-brand-goldLight mb-0.5" id="badgeNameCaption">Самой замечательной!</div>
+                    <p class="text-[10px] text-brand-softRose/80 uppercase tracking-widest font-sans">Украшение нашего класса • 2026</p>
+                </div>
+
+                <button onclick="goToMonsterMiniGame()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-burgundy to-brand-deepRose text-brand-goldLight font-semibold shadow-lg hover:brightness-125 transition flex items-center justify-center gap-2">
+                    <span>Спасём 8 Марта! (Мини-игра)</span>
+                    <i class="fas fa-gamepad text-xs"></i>
+                </button>
+            </div>
+        </section>
+
+        <section id="step5Monster" class="w-full hidden transition-all duration-500 ease-in-out">
+            <div class="glass-card rounded-3xl p-6 text-center relative overflow-hidden">
+                <span class="text-xs font-semibold text-brand-gold tracking-widest uppercase">Мини-Игра • Защитим Весну</span>
+                <h2 class="font-serif text-2xl sm:text-3xl italic text-white my-1">О нет! Гринч Весны!</h2>
+                <p class="text-xs text-brand-softRose/80 mb-4">Он хочет заморозить все букеты и испортить 8 Марта. Атакуй его цветами и теплом!</p>
+
+                <!-- Monster Card Frame -->
+                <div class="relative w-full aspect-square max-w-[270px] mx-auto my-2 rounded-2xl overflow-hidden border border-brand-gold/40 shadow-2xl bg-gradient-to-b from-brand-darkPlum via-brand-deepRose/80 to-black flex flex-col items-center justify-center p-4" id="monsterTargetArea" onclick="attackMonster(event)">
+                    
+                    <!-- Speech Bubble -->
+                    <div class="absolute top-3 left-3 right-3 bg-white/95 text-gray-900 rounded-2xl px-3 py-2 text-xs font-medium shadow-xl border border-brand-gold/60 transition-all duration-300 transform" id="monsterSpeech">
+                        "Я заморожу всё 8 Марта! Никаких цветов и улыбок! ❄️😈"
+                    </div>
+
+                    <!-- Monster Visual (Changes Emoji / Expression) -->
+                    <div class="text-7xl sm:text-8xl mt-12 transition-transform duration-200 select-none cursor-pointer filter drop-shadow-[0_0_20px_rgba(255,117,151,0.5)]" id="monsterEmoji">
+                        👹
+                    </div>
+
+                    <div class="mt-2 text-xs font-bold text-brand-goldLight tracking-wide" id="monsterTitle">
+                        Мрачный Вредитель
+                    </div>
+                </div>
+
+                <!-- Monster HP Bar -->
+                <div class="mt-4 mb-3">
+                    <div class="flex justify-between items-center text-xs text-brand-goldLight font-medium mb-1">
+                        <span>Здоровье Монстра:</span>
+                        <span id="monsterHpLabel" class="font-bold text-brand-brightRose">100 / 100 HP</span>
+                    </div>
+                    <div class="w-full bg-brand-darkPlum/90 rounded-full h-4 border border-brand-gold/30 p-0.5 shadow-inner">
+                        <div id="monsterHpBar" class="bg-gradient-to-r from-red-500 via-pink-500 to-brand-brightRose h-full rounded-full transition-all duration-300 w-full"></div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <button id="attackBtn" onclick="attackMonster(event)" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-gold via-yellow-500 to-brand-brightRose text-brand-darkPlum font-bold shadow-lg hover:brightness-110 active:scale-95 transition flex items-center justify-center gap-2 btn-glow">
+                        <i class="fas fa-flower text-sm"></i>
+                        <span>Забросать цветами и теплом! 🌸</span>
+                    </button>
+                </div>
+
+                <div id="monsterVictoryBox" class="hidden mt-4">
+                    <div class="p-3 rounded-2xl bg-brand-gold/20 border border-brand-gold/50 text-brand-goldLight text-xs mb-3 animate-pulse">
+                        🎉 Ура! Вы растопили холодное сердце вредителя! 8 Марта спасенено!
+                    </div>
+                    <button onclick="goToStep6Clicker()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-gold via-yellow-500 to-brand-brightRose text-brand-darkPlum font-bold shadow-lg hover:brightness-110 transition btn-glow flex items-center justify-center gap-2">
+                        <span>Собрать праздничные сердца</span>
+                        <i class="fas fa-arrow-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 6: HEART CLICKER & SPRING CANVAS GRAPHIC -->
+        <section id="step6Clicker" class="w-full hidden transition-all duration-500 ease-in-out">
+            <div class="glass-card rounded-3xl p-6 text-center relative overflow-hidden">
+                <span class="text-xs font-semibold text-brand-gold tracking-widest uppercase">Сбор весенних сердец</span>
+                <h2 class="font-serif text-2xl sm:text-3xl italic text-white my-1">Зажги праздничный букет</h2>
+
+                <!-- Procedural Art Canvas Reveal -->
+                <div class="relative w-full aspect-square max-w-[280px] mx-auto my-4 rounded-2xl overflow-hidden border border-brand-gold/40 shadow-2xl bg-black/60 flex items-center justify-center" id="canvasWrapper">
+                    <canvas id="artCanvas" class="w-full h-full object-cover"></canvas>
+
+                    <!-- Tap Target Overlay -->
+                    <div id="tapTarget" onclick="registerHeartTap(event)" class="absolute inset-0 flex flex-col items-center justify-center cursor-pointer select-none">
+                        <div class="w-20 h-20 rounded-full bg-brand-brightRose/30 backdrop-blur-md border border-brand-gold/60 flex items-center justify-center text-brand-gold text-3xl shadow-xl transition active:scale-95 hover:scale-105 btn-glow">
+                            <i class="fas fa-heart animate-pulse text-brand-brightRose"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-brand-goldLight mt-2 bg-black/60 px-3 py-1 rounded-full backdrop-blur-sm">нажимай на экран!</span>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="mb-4">
+                    <div class="flex justify-between items-center text-xs text-brand-goldLight font-medium mb-1">
+                        <span>Собрано сердец</span>
+                        <span id="heartCountLabel">0 / 888</span>
+                    </div>
+                    <div class="w-full bg-brand-darkPlum/80 rounded-full h-3 border border-brand-gold/30 p-0.5">
+                        <div id="progressBar" class="bg-gradient-to-r from-brand-gold via-brand-brightRose to-yellow-300 h-full rounded-full transition-all duration-150 w-0"></div>
+                    </div>
+                </div>
+
+                <div class="flex gap-2 mb-4">
+                    <button id="autoTapBtn" onclick="toggleAutoTap()" class="flex-1 py-2 px-3 rounded-xl glass-input text-xs text-brand-goldLight hover:bg-brand-gold/20 transition flex items-center justify-center gap-1.5">
+                        <i class="fas fa-bolt text-yellow-400"></i>
+                        <span>Ускорить (x25)</span>
+                    </button>
+                    <button onclick="instantCompleteTaps()" class="py-2 px-3 rounded-xl glass-input text-xs text-brand-softRose/80 hover:text-white transition">
+                        Открыть сразу
+                    </button>
+                </div>
+
+                <p class="text-xs text-brand-softRose/80 font-serif italic mb-2">
+                    «Нам понадобилось <span id="dynamicHeartNum" class="font-bold text-brand-gold">888</span> сердец, чтобы зажечь эту праздничную открытку для тебя, <span id="clickerGirlName">Полина</span>...»
+                </p>
+
+                <div id="finishStep6Btn" class="mt-4 hidden">
+                    <button onclick="goToStep7Certificate()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-gold via-yellow-500 to-brand-brightRose text-brand-darkPlum font-bold shadow-lg hover:brightness-110 transition btn-glow flex items-center justify-center gap-2">
+                        <span>Посмотреть сертификат</span>
+                        <i class="fas fa-star text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 7: FINAL CERTIFICATE SCREEN WITH ANIMATED HEART -->
+        <section id="step7Certificate" class="w-full hidden transition-all duration-500 ease-in-out">
+            <div class="glass-card rounded-3xl p-6 sm:p-8 text-center relative overflow-hidden border border-brand-gold/50">
+
+                <div class="inline-block px-3.5 py-1 rounded-full bg-brand-gold/20 border border-brand-gold/40 text-brand-gold text-xs font-semibold uppercase tracking-wider mb-2">
+                    ✨ Праздничный Сертификат
+                </div>
+
+                <h2 class="font-serif text-3xl sm:text-4xl italic text-white" id="finalGirlName">С 8 Марта!</h2>
+                <p class="text-xs text-brand-softRose/80 mb-2 font-light">Твое персональное поздравление получено</p>
+
+                <!-- ANIMATED HEART FEATURE FOR CERTIFICATE -->
+                <div class="relative my-6 flex justify-center items-center">
+                    <!-- Outer pulsating blurred glow -->
+                    <div class="absolute w-36 h-36 rounded-full bg-gradient-to-r from-brand-brightRose via-brand-gold to-pink-500 opacity-50 blur-2xl animate-pulse"></div>
+                    <div class="absolute w-28 h-28 rounded-full border-2 border-brand-gold/40 animate-ping opacity-30"></div>
+
+                    <!-- Rotating dash sparkle ring -->
+                    <div class="absolute w-44 h-44 border border-dashed border-brand-gold/35 rounded-full animate-spin-slow pointer-events-none"></div>
+
+                    <!-- Main Animated Glassmorphism Heart Badge -->
+                    <div id="certificateHeart" class="certificate-heart-container relative z-10 w-28 h-28 rounded-3xl bg-gradient-to-br from-brand-deepRose/90 to-brand-burgundy/90 border-2 border-brand-gold/60 flex items-center justify-center shadow-[0_0_50px_rgba(255,117,151,0.6)] backdrop-blur-md">
+                        <svg class="w-16 h-16 text-brand-brightRose filter drop-shadow-[0_0_12px_rgba(255,117,151,0.85)] animate-heartbeat" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                        <i class="fas fa-sparkles text-brand-gold absolute top-2 right-3 text-xs animate-bounce"></i>
+                        <i class="fas fa-star text-brand-goldLight absolute bottom-2 left-3 text-[10px] animate-pulse"></i>
+                    </div>
+                </div>
+
+                <!-- Golden Banner -->
+                <div class="emblem-card rounded-2xl p-4 my-4 border border-brand-gold/50 shadow-2xl relative">
+                    <div class="text-2xl mb-1">🌸 👑 🌷</div>
+                    <div class="font-serif text-2xl font-bold text-brand-goldLight italic" id="finalBannerName">Самой лучшей!</div>
+                    <p class="text-xs text-brand-softRose/80 mt-1">Спасибо, что украшаешь наш класс каждый день!</p>
+                </div>
+
+                <!-- Ticket Summary Info -->
+                <div class="bg-brand-darkPlum/90 rounded-2xl p-4 text-left border border-brand-gold/30 mb-6 space-y-2.5 text-xs">
+                    <div class="flex justify-between border-b border-brand-gold/15 pb-2">
+                        <span class="text-brand-softRose/70">Одноклассница:</span>
+                        <span class="font-semibold text-white" id="summaryRecipient">Имя</span>
+                    </div>
+                    <div class="flex justify-between border-b border-brand-gold/15 pb-2">
+                        <span class="text-brand-softRose/70">Поздравление от:</span>
+                        <span class="font-semibold text-brand-gold">Парней нашего класса 💐</span>
+                    </div>
+                    <div class="flex justify-between border-b border-brand-gold/15 pb-2">
+                        <span class="text-brand-softRose/70">Мини-игра:</span>
+                        <span class="font-semibold text-green-400">Вредитель побеждён! 🛡️</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-brand-softRose/70">Собрано сердец:</span>
+                        <span class="font-semibold text-brand-goldLight" id="summaryHearts">888 💕</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="shareGreeting()" class="py-3 rounded-xl bg-gradient-to-r from-brand-gold to-yellow-500 text-brand-darkPlum font-bold text-xs shadow-lg hover:brightness-110 transition flex items-center justify-center gap-2">
+                        <i class="fas fa-copy"></i>
+                        <span>Скопировать</span>
+                    </button>
+                    <button onclick="restartGreeting()" class="py-3 rounded-xl glass-input text-xs text-brand-softRose hover:text-white transition flex items-center justify-center gap-2">
+                        <i class="fas fa-redo"></i>
+                        <span>С начала</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="adminModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+        <div class="glass-card rounded-3xl max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden border border-brand-gold/50">
+            <div class="p-5 border-b border-brand-gold/30 flex justify-between items-center bg-brand-darkPlum">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-cog text-brand-gold"></i>
+                    <h3 class="font-semibold text-white text-sm">Панель управления</h3>
+                </div>
+                <button onclick="closeAdminModal()" class="text-brand-softRose hover:text-white text-lg"><i class="fas fa-times"></i></button>
+            </div>
+
+            <div class="p-5 overflow-y-auto space-y-4 flex-1 text-xs">
+                <!-- Secret Word & Hint Settings -->
+                <div class="p-3 rounded-2xl bg-brand-darkPlum/60 border border-brand-gold/20 space-y-3">
+                    <h4 class="font-bold text-brand-gold">Общие настройки доступа:</h4>
+                    <div>
+                        <label class="block text-brand-softRose mb-1">Секретное кодовое слово:</label>
+                        <input type="text" id="editSecretWord" class="w-full glass-input rounded-xl px-3 py-2 font-semibold" placeholder="Школа">
+                    </div>
+                    <div>
+                        <label class="block text-brand-softRose mb-1">Текст подсказки на экране:</label>
+                        <input type="text" id="editHintText" class="w-full glass-input rounded-xl px-3 py-2" placeholder="где мы чаще всего видимся">
+                    </div>
+                </div>
+
+                <!-- Girls Greeting Settings -->
+                <div class="p-3 rounded-2xl bg-brand-darkPlum/60 border border-brand-gold/20 space-y-3">
+                    <h4 class="font-bold text-brand-gold">Персональные поздравления:</h4>
+                    <div>
+                        <label class="block text-brand-softRose mb-1">Выберите одноклассницу:</label>
+                        <select id="adminGirlSelect" onchange="loadAdminGirlMessage()" class="w-full glass-input rounded-xl px-3 py-2">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-brand-softRose mb-1">Текст письма:</label>
+                        <textarea id="editGirlMessage" rows="6" class="w-full glass-input rounded-xl px-3 py-2 leading-relaxed font-serif" placeholder="Текст поздравления..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-4 border-t border-brand-gold/30 bg-brand-darkPlum flex justify-between gap-3">
+                <button onclick="resetDefaults()" class="px-3 py-2 rounded-xl text-brand-softRose hover:text-white hover:bg-white/10 transition">Сбросить всё</button>
+                <button onclick="saveAdminSettings()" class="px-5 py-2 rounded-xl bg-brand-gold text-brand-darkPlum font-bold shadow-md hover:brightness-110 transition">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Array of all 15 female classmates
+        const GIRLS_LIST = [
+            "Полина", "Софа", "Соня", "Милана", "Александра",
+            "Лилиана", "Амина", "Арина Г.", "Арина Ч.", "Кристина",
+            "Диана", "Лена", "Ева", "Ника", "Мариам"
+        ];
+
+        const DEFAULT_GREETINGS = {
+            "Полина": "Дорогая Полина!\n\nС праздником 8 Марта! 🌸\n\nТы — настоящий лучик солнца в нашем классе! Твой позитив, жизнерадостность и отзывчивость всегда поднимают настроение парням даже в самые сложные учебные дни. Спасибо за твою прекрасную улыбку и доброту!\n\nПусть эта весна подарит тебе исполнение всех желаний, море цветов и бесконечное счастье!",
+
+            "Софа": "Милая Софа!\n\nПоздравляем тебя с 8 Марта! 🌷\n\nТвоё чувство стиля, искренность и невероятный шарм восхищают весь наш класс. С тобой всегда легко и приятно общаться, а твоя поддержка делает атмосферу вокруг невероятно тёплой.\n\nЖелаем тебе ярких впечатлений, лёгкости в учёбе и только радостных моментов каждый день!",
+
+            "Соня": "Прекрасная Соня!\n\nС Международным женским днём! ✨\n\nТвоё отличное чувство юмора, мудрость и классная энергия делают любой день в школе гораздо интереснее и веселее. Ты приносишь в наш класс особенный драйв и уют!\n\nПусть в твоей жизни всегда будет место для вдохновения, верных друзей и волшебных сюрпризов!",
+
+            "Милана": "Очаровательная Милана!\n\nС праздником весны, с 8 Марта! 💐\n\nТы — воплощение грации, доброты и утонченности. Твоя улыбка буквально зажигает всё вокруг, а твоя искренняя доброта вызывает огромное уважение у всех парней нашего класса.\n\nОставайся всегда такой же светлой, красивой и вдохновляющей!",
+
+            "Александра": "Дорогая Саша!\n\nПоздравляем с 8 Марта! 👑\n\nТвой острый ум, уверенность, целеустремленность и отличное чувство юмора заставляют нас искренне гордиться тем, что мы учимся в одном классе. Ты — настоящая лидерская и сильная личность!\n\nЖелаем тебе больших побед, лёгких решений любых задач и невероятных успехов во всём!",
+
+            "Лилиана": "Нежная Лилиана!\n\nС 8 Марта тебя! 🌺\n\nТы — невероятно творческая, утонченная и душевная девчонка. Твой спокойный свет и доброта делают наш класс гораздо гармоничнее и добрее. Спасибо за твоё тепло!\n\nПусть весна закружит тебя в приятных эмоциях, исполнит мечты и принесёт много радости!",
+
+            "Амина": "Яркая Амина!\n\nС праздником 8 Марта! 🌟\n\nТвой звонкий смех, отзывчивость и невероятная харизма — это настоящий подарок для нашего коллектива. С тобой никогда не бывает скучно, ты умеешь разрядить любую обстановку!\n\nЖелаем тебе бесконечного вдохновения, отличных оценок и только счастливых улыбок!",
+
+            "Арина Г.": "Замечательная Арина!\n\nС 8 Марта! 🎀\n\nТвоя чуткость, внимание к мелочам и прекрасное очарование делают школьные будни по-настоящему светлыми. Ты даришь нашему классу столько тепла и искренности!\n\nПусть в твоей жизни всегда цветут любимые цветы, а удача сопутствует в каждом начинании!",
+
+            "Арина Ч.": "Дорогая Арина!\n\nПоздравляем с Международным женским днём! 🌺\n\nТвоя невероятная энергия, открытость миру и позитивный настрой способны зарядить любого вокруг! Спасибо за твою активность и жизнерадостность.\n\nЖелаем тебе отличного настроения, ярких путешествий, улыбок и исполнения самых смелых идей!",
+
+            "Кристина": "Красивая Кристина!\n\nС праздником 8 Марта! 🌹\n\nТвоя потрясающая улыбка, чувство стиля и обаяние привлекают взгляды каждого. Ты — настоящее украшение и гордость нашего класса!\n\nПусть эта весна принесёт тебе океан приятных комплиментов, радостных встреч и исполнения самых заветных желаний!",
+
+            "Диана": "Прекрасная Диана!\n\nС 8 Марта тебя! ✨\n\nТы — умная, стильная, сдержанная и одновременно невероятно отзывчивая девчонка. С тобой всегда здорово обсудить всё на свете и просто с удовольствием посмеяться на переменах!\n\nПусть весеннее солнце дарит тебе энергию, а каждый день приносит повод для радости!",
+
+            "Лена": "Милая Лена!\n\nПоздравляем с праздником 8 Марта! 🌸\n\nТвоё спокойствие, добродушие и золотое сердце делают тебя самым надёжным и прекрасным человеком. Парни нашего класса очень ценят твоё искреннее отношение и заботу!\n\nЖелаем тебе гармонии, лёгкости во всем, верных друзей и волшебного весеннего настроения!",
+
+            "Ева": "Загадочная Ева!\n\nС 8 Марта! 🌷\n\nТвой яркий характер, мечтательность и невероятный шарм делают тебя особенной. Ты приносишь в наш класс свой уникальный стиль и вдохновляющую атмосферу!\n\nПусть твоя жизнь будет наполнена счастливыми моментами, творчеством и сплошным позитивом!",
+
+            "Ника": "Динамичная Ника!\n\nС Международным женским днём! 💖\n\nТы — целеустремленная, веселая, боевая и невероятно привлекательная девчонка! Твоя уверенность в себе и позитивная энергия восхищают всех нас.\n\nЖелаем тебе уверенно идти к своим целям, легко покорять вершины и всегда улыбаться!",
+
+            "Мариам": "Утонченная Мариам!\n\nС 8 Марта! 💐\n\nТвой глубокий ум, воспитанность, доброта и благородство вызывают у парней нашего класса самое искреннее уважение. Ты украшаешь наш коллектив своей мудростью и красотой!\n\nЖелаем тебе огромного счастья, успехов в учёбе, удачи и много солнечных дней!"
+        };
+
+        let config = {
+            secretWord: "Школа",
+            hintText: "где мы чаще всего видимся",
+            messages: {}
+        };
+
+        GIRLS_LIST.forEach(g => {
+            config.messages[g] = DEFAULT_GREETINGS[g];
+        });
+
+        let selectedGirl = "";
+        let currentTaps = 0;
+        const TARGET_TAPS = 888;
+        let autoTapInterval = null;
+        let audioCtx = null;
+        let isMuted = false;
+
+        // Monster Mini-game Variables
+        let monsterHP = 100;
+        const maxMonsterHP = 100;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadConfigFromStorage();
+            initBgCanvas();
+            renderStep1Hint();
+            renderNamesGrid();
+        });
+
+        function loadConfigFromStorage() {
+            const saved = localStorage.getItem('march8_app_config_2026_v4');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    if (parsed.secretWord) config.secretWord = parsed.secretWord;
+                    if (parsed.hintText) config.hintText = parsed.hintText;
+                    if (parsed.messages) config.messages = { ...config.messages, ...parsed.messages };
+                } catch(e) {
+                    console.error("Config parse error:", e);
+                }
+            }
+        }
+
+        function saveConfigToStorage() {
+            localStorage.setItem('march8_app_config_2026_v4', JSON.stringify(config));
+        }
+
+        function renderStep1Hint() {
+            document.getElementById('displayHintText').textContent = `подсказка: ${config.hintText}`;
+        }
+
+        function normalize(str) {
+            return (str || '').trim().toLowerCase();
+        }
+
+        function checkSecretCode() {
+            const input = document.getElementById('secretInput').value;
+            if (normalize(input) === normalize(config.secretWord)) {
+                showToast("Правильно! Выбери своё имя", "fa-check-circle");
+                playChimeSound();
+                setTimeout(() => {
+                    switchStep('step1', 'step2');
+                }, 400);
+            } else {
+                showToast("Неверное слово! Попробуй ещё раз", "fa-times-circle");
+            }
+        }
+
+        function renderNamesGrid() {
+            const grid = document.getElementById('namesGrid');
+            grid.innerHTML = '';
+            GIRLS_LIST.forEach(name => {
+                const btn = document.createElement('button');
+                btn.className = 'p-3 rounded-xl glass-card text-xs font-semibold text-white hover:border-brand-gold hover:bg-brand-brightRose/30 active:scale-95 transition flex items-center justify-center gap-1.5';
+                btn.innerHTML = `<i class="fas fa-heart text-[10px] text-brand-gold"></i><span>${name}</span>`;
+                btn.onclick = () => selectClassmateName(name);
+                grid.appendChild(btn);
+            });
+        }
+
+        function selectClassmateName(name) {
+            selectedGirl = name;
+            playTapSound();
+            showToast(`Привет, ${name}!`, "fa-heart");
+            setupStep3();
+            switchStep('step2', 'step3');
+        }
+
+        function switchStep(fromId, toId) {
+            const fromElem = document.getElementById(fromId);
+            const toElem = document.getElementById(toId);
+
+            fromElem.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => {
+                fromElem.classList.add('hidden');
+                toElem.classList.remove('hidden');
+                toElem.classList.remove('opacity-0', 'scale-95');
+            }, 300);
+        }
+
+        function setupStep3() {
+            document.getElementById('recipientGreetingTitle').textContent = `${selectedGirl}, тебе письмо`;
+            document.getElementById('letterHeaderTitle').textContent = `С днём 8 Марта, ${selectedGirl}!`;
+            document.getElementById('badgeNameCaption').textContent = `${selectedGirl} ✨`;
+
+            const msg = config.messages[selectedGirl] || DEFAULT_GREETINGS[selectedGirl];
+            document.getElementById('letterBody').textContent = msg;
+
+            document.getElementById('envelopeObj').classList.remove('open');
+            document.getElementById('envelopeView').classList.remove('hidden');
+        }
+
+        function openEnvelope() {
+            const env = document.getElementById('envelopeObj');
+            if (!env.classList.contains('open')) {
+                env.classList.add('open');
+                playChimeSound();
+
+                setTimeout(() => {
+                    switchStep('step3', 'step4');
+                }, 850);
+            }
+        }
+
+        function goToMonsterMiniGame() {
+            monsterHP = 100;
+            updateMonsterUI();
+            document.getElementById('monsterVictoryBox').classList.add('hidden');
+            document.getElementById('attackBtn').classList.remove('hidden');
+            switchStep('step4', 'step5Monster');
+        }
+
+        function attackMonster(e) {
+            if (monsterHP <= 0) return;
+
+            const damage = Math.floor(Math.random() * 5) + 12; // 12-16 damage per hit (~7-8 hits total)
+            monsterHP -= damage;
+            if (monsterHP < 0) monsterHP = 0;
+
+            playTapSound();
+            spawnAttackParticle(e);
+            shakeMonster();
+            updateMonsterUI();
+
+            if (monsterHP <= 0) {
+                playChimeSound();
+                triggerVictoryConfetti();
+                document.getElementById('attackBtn').classList.add('hidden');
+                document.getElementById('monsterVictoryBox').classList.remove('hidden');
+            }
+        }
+
+        function shakeMonster() {
+            const elem = document.getElementById('monsterEmoji');
+            elem.classList.remove('monster-hit');
+            void elem.offsetWidth; // force reflow
+            elem.classList.add('monster-hit');
+        }
+
+        function updateMonsterUI() {
+            const hpBar = document.getElementById('monsterHpBar');
+            const hpLabel = document.getElementById('monsterHpLabel');
+            const speech = document.getElementById('monsterSpeech');
+            const emoji = document.getElementById('monsterEmoji');
+            const title = document.getElementById('monsterTitle');
+
+            hpLabel.textContent = `${monsterHP} / ${maxMonsterHP} HP`;
+            hpBar.style.width = `${(monsterHP / maxMonsterHP) * 100}%`;
+
+            if (monsterHP > 75) {
+                emoji.textContent = "👹";
+                title.textContent = "Злой Мрачный Вредитель";
+                speech.textContent = `"Я заморожу всё 8 Марта! Никаких цветов! ❄️😈"`;
+            } else if (monsterHP > 50) {
+                emoji.textContent = "😠";
+                title.textContent = "Озадаченный Вредитель";
+                speech.textContent = `"Эй! Откуда столько тепла?! Мой мороз тает! ☀️🌸"`;
+            } else if (monsterHP > 25) {
+                emoji.textContent = "😮";
+                title.textContent = "Тающий Гринчик";
+                speech.textContent = `"Ой-ой-ой! Цветочные атаки слишком сильные! 💐💥"`;
+            } else if (monsterHP > 0) {
+                emoji.textContent = "😵";
+                title.textContent = "Почти Добренький Гринч";
+                speech.textContent = `"Щекотно! Ладно, я больше не буду пакостить! 🙈🌺"`;
+            } else {
+                emoji.textContent = "🥰";
+                title.textContent = "Счастливый и добрый Гринч";
+                speech.textContent = `"Всё-всё, вы победили! 8 Марта спасено, с праздником! 🎉💐"`;
+            }
+        }
+
+        function spawnAttackParticle(e) {
+            const target = document.getElementById('monsterTargetArea');
+            const rect = target.getBoundingClientRect();
+
+            let x = rect.width / 2;
+            let y = rect.height / 2;
+
+            if (e && e.clientX) {
+                x = e.clientX - rect.left;
+                y = e.clientY - rect.top;
+            }
+
+            const p = document.createElement('div');
+            p.className = 'floating-heart';
+            p.innerHTML = ['🌸', '☀️', '🌺', '💖', '💐', '✨', '🌼'][Math.floor(Math.random() * 7)];
+            p.style.left = `${x - 12}px`;
+            p.style.top = `${y - 12}px`;
+
+            target.appendChild(p);
+            setTimeout(() => p.remove(), 1200);
+        }
+
+        function triggerVictoryConfetti() {
+            const target = document.getElementById('monsterTargetArea');
+            for (let i = 0; i < 25; i++) {
+                setTimeout(() => {
+                    const p = document.createElement('div');
+                    p.className = 'floating-heart';
+                    p.innerHTML = ['🎉', '🌸', '✨', '👑', '💖', '💐'][Math.floor(Math.random() * 6)];
+                    p.style.left = `${Math.random() * 80 + 10}%`;
+                    p.style.top = `${Math.random() * 80 + 10}%`;
+                    target.appendChild(p);
+                    setTimeout(() => p.remove(), 1200);
+                }, i * 40);
+            }
+        }
+
+        function goToStep6Clicker() {
+            document.getElementById('clickerGirlName').textContent = selectedGirl;
+            switchStep('step5Monster', 'step6Clicker');
+            initArtCanvas();
+        }
+
+        function initArtCanvas() {
+            currentTaps = 0;
+            updateTapperUI();
+            drawArtCanvas(0);
+        }
+
+        function drawArtCanvas(progressRatio) {
+            const canvas = document.getElementById('artCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = 300;
+            canvas.height = 300;
+            const w = canvas.width;
+            const h = canvas.height;
+
+            // Background
+            const bgGrad = ctx.createRadialGradient(w/2, h/2, 10, w/2, h/2, 180);
+            bgGrad.addColorStop(0, '#42122F');
+            bgGrad.addColorStop(1, '#1F0614');
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, w, h);
+
+            // Outer Ring
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = `rgba(226, 184, 107, ${0.2 + progressRatio * 0.8})`;
+            ctx.beginPath();
+            ctx.arc(w/2, h/2, 120, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Figure 8 Glowing Text
+            ctx.font = 'bold 110px Cormorant Garamond, serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            ctx.shadowColor = '#FF7597';
+            ctx.shadowBlur = 10 + progressRatio * 30;
+
+            const textGrad = ctx.createLinearGradient(100, 50, 200, 250);
+            textGrad.addColorStop(0, '#E2B86B');
+            textGrad.addColorStop(0.5, '#FF7597');
+            textGrad.addColorStop(1, '#FFF0C3');
+
+            ctx.fillStyle = textGrad;
+            ctx.fillText('8', w/2, h/2 - 10);
+
+            // Subtext
+            ctx.shadowBlur = 0;
+            ctx.font = 'italic 18px Cormorant Garamond, serif';
+            ctx.fillStyle = `rgba(255, 240, 195, ${Math.max(0.3, progressRatio)})`;
+            ctx.fillText('Марта', w/2, h/2 + 60);
+
+            // Blooming Petals
+            const totalPetals = 20;
+            const revealedPetals = Math.floor(totalPetals * progressRatio);
+
+            for (let i = 0; i < revealedPetals; i++) {
+                const angle = (i / totalPetals) * Math.PI * 2;
+                const r = 120;
+                const px = w/2 + Math.cos(angle) * r;
+                const py = h/2 + Math.sin(angle) * r;
+
+                ctx.save();
+                ctx.translate(px, py);
+                ctx.rotate(angle + Math.PI/2);
+                ctx.fillStyle = '#FF7597';
+                ctx.beginPath();
+                ctx.ellipse(0, 0, 7, 13, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function registerHeartTap(e) {
+            currentTaps += 1;
+            if (currentTaps > TARGET_TAPS) currentTaps = TARGET_TAPS;
+
+            spawnFloatingHeart(e);
+            playTapSound();
+            updateTapperUI();
+        }
+
+        function spawnFloatingHeart(e) {
+            const wrapper = document.getElementById('canvasWrapper');
+            const rect = wrapper.getBoundingClientRect();
+
+            let x = rect.width / 2;
+            let y = rect.height / 2;
+
+            if (e && e.clientX) {
+                x = e.clientX - rect.left;
+                y = e.clientY - rect.top;
+            }
+
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.innerHTML = ['💖', '🌸', '✨', '💕', '🌷', '👑', '🌹'][Math.floor(Math.random() * 7)];
+            heart.style.left = `${x - 12}px`;
+            heart.style.top = `${y - 12}px`;
+
+            wrapper.appendChild(heart);
+            setTimeout(() => heart.remove(), 1200);
+        }
+
+        function updateTapperUI() {
+            const ratio = currentTaps / TARGET_TAPS;
+            document.getElementById('heartCountLabel').textContent = `${currentTaps} / ${TARGET_TAPS}`;
+            document.getElementById('dynamicHeartNum').textContent = currentTaps;
+            document.getElementById('progressBar').style.width = `${Math.min(100, ratio * 100)}%`;
+
+            drawArtCanvas(ratio);
+
+            if (currentTaps >= TARGET_TAPS) {
+                if (autoTapInterval) clearInterval(autoTapInterval);
+                document.getElementById('finishStep6Btn').classList.remove('hidden');
+                document.getElementById('tapTarget').classList.add('pointer-events-none');
+            }
+        }
+
+        function toggleAutoTap() {
+            if (autoTapInterval) {
+                clearInterval(autoTapInterval);
+                autoTapInterval = null;
+                showToast("Ускорение остановлено", "fa-pause");
+            } else {
+                autoTapInterval = setInterval(() => {
+                    if (currentTaps < TARGET_TAPS) {
+                        currentTaps += 25;
+                        if (currentTaps > TARGET_TAPS) currentTaps = TARGET_TAPS;
+                        spawnFloatingHeart(null);
+                        updateTapperUI();
+                    } else {
+                        clearInterval(autoTapInterval);
+                        autoTapInterval = null;
+                    }
+                }, 40);
+                showToast("Ускорение включено!", "fa-bolt");
+            }
+        }
+
+        function instantCompleteTaps() {
+            currentTaps = TARGET_TAPS;
+            updateTapperUI();
+            showToast("Открытка зажглась на 100%!", "fa-star");
+        }
+
+        function goToStep7Certificate() {
+            document.getElementById('finalGirlName').textContent = `${selectedGirl}, с 8 Марта!`;
+            document.getElementById('finalBannerName').textContent = `${selectedGirl} ✨`;
+            document.getElementById('summaryRecipient').textContent = selectedGirl;
+            document.getElementById('summaryHearts').textContent = `${currentTaps} 💕`;
+
+            switchStep('step6Clicker', 'step7Certificate');
+
+            // Trigger smooth animated pop-in for certificate heart element
+            const certHeart = document.getElementById('certificateHeart');
+            if (certHeart) {
+                certHeart.classList.remove('appear');
+                void certHeart.offsetWidth;
+                certHeart.classList.add('appear');
+            }
+
+            playChimeSound();
+        }
+
+        function shareGreeting() {
+            const text = `С 8 Марта, ${selectedGirl}! Твоё праздничное поздравление от парней нашего класса получено! 🌸✨`;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast("Поздравление скопировано!", "fa-check");
+                }).catch(() => fallbackCopy(text));
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            showToast("Поздравление скопировано!", "fa-check");
+        }
+
+        function restartGreeting() {
+            switchStep('step7Certificate', 'step1');
+            document.getElementById('secretInput').value = '';
+        }
+
+        function openAdminModal() {
+            document.getElementById('editSecretWord').value = config.secretWord;
+            document.getElementById('editHintText').value = config.hintText;
+
+            const select = document.getElementById('adminGirlSelect');
+            select.innerHTML = '';
+            GIRLS_LIST.forEach(g => {
+                const opt = document.createElement('option');
+                opt.value = g;
+                opt.textContent = g;
+                select.appendChild(opt);
+            });
+
+            loadAdminGirlMessage();
+            document.getElementById('adminModal').classList.remove('hidden');
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+        }
+
+        function loadAdminGirlMessage() {
+            const girl = document.getElementById('adminGirlSelect').value;
+            if (girl) {
+                document.getElementById('editGirlMessage').value = config.messages[girl] || DEFAULT_GREETINGS[girl];
+            }
+        }
+
+        function saveAdminSettings() {
+            const secret = document.getElementById('editSecretWord').value.trim();
+            const hint = document.getElementById('editHintText').value.trim();
+            const currentGirlEdit = document.getElementById('adminGirlSelect').value;
+            const msgEdit = document.getElementById('editGirlMessage').value.trim();
+
+            if (secret) config.secretWord = secret;
+            if (hint) config.hintText = hint;
+            if (currentGirlEdit && msgEdit) config.messages[currentGirlEdit] = msgEdit;
+
+            saveConfigToStorage();
+            renderStep1Hint();
+            closeAdminModal();
+            showToast("Настройки успешно сохранены!", "fa-save");
+        }
+
+        function resetDefaults() {
+            config.secretWord = "Школа";
+            config.hintText = "где мы чаще всего видимся";
+            GIRLS_LIST.forEach(g => {
+                config.messages[g] = DEFAULT_GREETINGS[g];
+            });
+            saveConfigToStorage();
+            renderStep1Hint();
+            closeAdminModal();
+            showToast("Сброшено к стандартным настройкам", "fa-undo");
+        }
+
+        function initAudioContext() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) audioCtx = new AudioContext();
+            }
+        }
+
+        function playTapSound() {
+            if (isMuted) return;
+            initAudioContext();
+            if (!audioCtx) return;
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(400 + Math.random() * 200, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        }
+
+        function playChimeSound() {
+            if (isMuted) return;
+            initAudioContext();
+            if (!audioCtx) return;
+
+            [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+                setTimeout(() => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.3);
+                }, idx * 80);
+            });
+        }
+
+        function toggleAudio() {
+            isMuted = !isMuted;
+            const icon = document.getElementById('soundIcon');
+            if (isMuted) {
+                icon.className = 'fas fa-volume-mute text-xs';
+                showToast("Звук выключен", "fa-volume-mute");
+            } else {
+                icon.className = 'fas fa-music text-xs';
+                showToast("Звук включен", "fa-music");
+                playChimeSound();
+            }
+        }
+
+        function showToast(msg, icon = 'fa-info-circle') {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            document.getElementById('toastIcon').className = `fas ${icon} text-brand-gold`;
+
+            toast.classList.remove('opacity-0', '-translate-y-20', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', '-translate-y-20', 'pointer-events-none');
+            }, 2500);
+        }
+
+        function initBgCanvas() {
+            const canvas = document.getElementById('bgCanvas');
+            const ctx = canvas.getContext('2d');
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            const petals = [];
+            for (let i = 0; i < 35; i++) {
+                petals.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 7 + 4,
+                    speedY: Math.random() * 1.2 + 0.5,
+                    speedX: Math.sin(Math.random() * Math.PI) * 0.8,
+                    angle: Math.random() * Math.PI * 2,
+                    spin: (Math.random() - 0.5) * 0.02,
+                    color: ['rgba(255, 117, 151, 0.35)', 'rgba(255, 209, 220, 0.3)', 'rgba(226, 184, 107, 0.25)'][Math.floor(Math.random() * 3)]
+                });
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                petals.forEach(p => {
+                    p.y += p.speedY;
+                    p.x += p.speedX;
+                    p.angle += p.spin;
+
+                    if (p.y > canvas.height + 20) {
+                        p.y = -20;
+                        p.x = Math.random() * canvas.width;
+                    }
+
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.angle);
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, p.size, p.size * 0.6, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+        }
+    </script>
+</body>
+</html>
